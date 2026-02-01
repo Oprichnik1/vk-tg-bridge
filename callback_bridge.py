@@ -8,16 +8,22 @@ from aiogram.enums import ParseMode
 # CONFIG — ВСТАВЬ СВОИ ЗНАЧЕНИЯ
 # ---------------------------------------
 
+# Telegram бот Remessege_bot
 TG_TOKEN = "8541886168:AAE__V_mWtC6l1H1dozTwXfmX3XLddtFlWY"
-VK_TOKEN = "vk1.a.YsC4drNa7Ph_ct22SAeMlc6ApbbYMlj1g7mfGxrw3PMWVybVO8OYpRsuOZBtmUa4R1cEcivC_DGsr9O2Wkhkv4ogl4rS7SmNx-ASf7r9GPkPUdgf_IC7mfk0z8y1xt3cvf4SQprbeKdwBdiQI7v8LZhEXMVmFP9PU8cUct9KieIkfkB72zPGxmbdG_iWtPhFrPZOXbruViYnm-kIVCpapg"
-TG_CHAT_ID = -1006537780853  # например: -1006537780853
-VK_PEER_ID = 2000000001     # например: 2000000001
+TG_CHAT_ID = -1006537780853  # твой TG_CHAT_ID
 
-bot = Bot(token=TG_TOKEN)
-dp = Dispatcher()
+# VK
+VK_TOKEN = "vk1.a.YsC4drNa7Ph_ct22SAeMlc6ApbbYMlj1g7mfGxrw3PMWVybVO8OYpRsuOZBtmUa4R1cEcivC_DGsr9O2Wkhkv4ogl4rS7SmNx-ASf7r9GPkPUdgf_IC7mfk0z8y1xt3cvf4SQprbeKdwBdiQI7v8LZhEXMVmFP9PU8cUct9KieIkfkB72zPGxmbdG_iWtPhFrPZOXbruViYnm-kIVCpapg"
+VK_PEER_ID = 2000000001      # твой VK_PEER_ID
+
+# Строка подтверждения из настроек Callback API VK
+VK_CONFIRMATION = "4755cd93"
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+bot = Bot(token=TG_TOKEN)
+dp = Dispatcher()
 
 # ---------------------------------------
 # TG → VK
@@ -37,7 +43,7 @@ async def send_to_vk(message_text: str):
         async with session.post(url, data=params) as resp:
             data = await resp.json()
             if "error" in data:
-                logger.error(f"⚠️ VK Error: {data}")
+                logger.error(f"VK Error: {data}")
             else:
                 logger.info("VK ← TG отправлено")
 
@@ -61,18 +67,18 @@ async def send_vk_to_tg(sender_name: str, message_text: str):
 
 async def vk_callback_handler(request):
     data = await request.json()
+    logger.info(f"VK EVENT: {data}")
 
-    # confirmation
+    # подтверждение сервера
     if data.get("type") == "confirmation":
-        return web.Response(text="confirmation")
+        return web.Response(text=VK_CONFIRMATION)
 
-    # new message
+    # новое сообщение
     if data.get("type") == "message_new":
         msg = data["object"]["message"]
         sender_id = msg["from_id"]
         text = msg.get("text", "")
 
-        # получаем имя отправителя
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 "https://api.vk.com/method/users.get",
@@ -102,4 +108,5 @@ async def start_app():
 
 
 if __name__ == "__main__":
+    logger.info("Bridge (Callback) Started 🚀")
     web.run_app(start_app(), port=8080)
