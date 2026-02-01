@@ -108,9 +108,8 @@ async def send_to_vk(text: str):
 @dp.message()
 async def handle_tg_message(message: Message):
     formatted = (
-        "📩 Новое сообщение из Telegram\n"
-        f"👤 От: {message.from_user.full_name}\n"
-        f"💬 Текст: {message.text}"
+        f"tg | {message.from_user.full_name}\n"
+        f"{message.text}"
     )
 
     await send_to_vk(formatted)
@@ -145,9 +144,8 @@ async def vk_callback(request: web.Request):
         vk_name = await get_vk_name(from_id)
 
         formatted = (
-            "📩 Новое сообщение из VK\n"
-            f"👤 От: {vk_name}\n"
-            f"💬 Текст: {text}"
+            f"vk | **{vk_name}**\n"
+            f"{text}"
         )
 
         try:
