@@ -7,18 +7,12 @@ from aiogram.enums import ParseMode
 # ---------------------------------------
 # CONFIG — ВСТАВЬ СВОИ ЗНАЧЕНИЯ
 # ---------------------------------------
+
 TG_TOKEN = "8541886168:AAE__V_mWtC6l1H1dozTwXfmX3XLddtFlWY"
-TG_CHAT_ID = -1003124432188
+VK_TOKEN = "vk1.a.YsC4drNa7Ph_ct22SAeMlc6ApbbYMlj1g7mfGxrw3PMWVybVO8OYpRsuOZBtmUa4R1cEcivC_DGsr9O2Wkhkv4ogl4rS7SmNx-ASf7r9GPkPUdgf_IC7mfk0z8y1xt3cvf4SQprbeKdwBdiQI7v8LZhEXMVmFP9PU8cUct9KieIkfkB72zPGxmbdG_iWtPhFrPZOXbruViYnm-kIVCpapg"
+TG_CHAT_ID = -1006537780853  # например: -1006537780853
+VK_PEER_ID = 2000000001     # например: 2000000001
 
-VK_GROUP_ID = 223916702
-VK_CONFIRMATION_CODE = "4755cd93"
-VK_SECRET_KEY = "aaQ13axAPQcczQa"
-
-VK_GROUP_TOKEN = "vk1.a.YsC4drNa7Ph_ct22SAeMlc6ApbbYMlj1g7mfGxrw3PMWVybVO8OYpRsuOZBtmUa4R1cEcivC_DGsr9O2Wkhkv4ogl4rS7SmNx-ASf7r9GPkPUdgf_IC7mfk0z8y1xt3cvf4SQprbeKdwBdiQI7v8LZhEXMVmFP9PU8cUct9KieIkfkB72zPGxmbdG_iWtPhFrPZOXbruViYnm-kIVCpapg"
-VK_PEER_ID = 2000000001
-
-MAX_TOKEN = "заглушка"
-MAX_CHAT_ID = -70642362567392
 bot = Bot(token=TG_TOKEN)
 dp = Dispatcher()
 
